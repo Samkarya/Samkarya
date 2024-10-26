@@ -6,142 +6,428 @@
     <title>Sumit Kumar - Software Developer</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 500ms, transform 500ms;
+        }
+        .project-card {
+            transition: transform 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        .skill-pill {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        .cursor-glow {
+            width: 20px;
+            height: 20px;
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transition: transform 0.1s;
+        }
+        .page-transition {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3B82F6;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
-    <!-- Hero Section -->
-    <header class="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-gray-900">
-        <div class="container mx-auto px-4 py-16 text-center">
-            <img src="/api/placeholder/150/150" alt="Profile Picture" class="rounded-full mx-auto mb-8 border-4 border-blue-500">
-            <h1 class="text-5xl font-bold mb-4">Sumit Kumar</h1>
-            <p class="text-xl text-blue-400 mb-8">Aspiring Software Developer | BCA Student</p>
-            <div class="flex justify-center space-x-4 mb-8">
-                <a href="mailto:1904sumitkumar@gmail.com" class="text-gray-300 hover:text-blue-400">
-                    <i class="fas fa-envelope text-2xl"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/sumit-kumar-a3a249335" class="text-gray-300 hover:text-blue-400">
-                    <i class="fab fa-linkedin text-2xl"></i>
-                </a>
-                <a href="tel:8604041703" class="text-gray-300 hover:text-blue-400">
-                    <i class="fas fa-phone text-2xl"></i>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Skills Section -->
-    <section class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Technical Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-gray-700 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4 text-blue-400">Programming Languages</h3>
-                    <ul class="space-y-2">
-                        <li>Python</li>
-                        <li>JavaScript</li>
-                        <li>Java</li>
-                        <li>TypeScript</li>
-                        <li>HTML/CSS</li>
-                        <li>C/C++</li>
-                    </ul>
-                </div>
-                <div class="bg-gray-700 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4 text-blue-400">Tools & Technologies</h3>
-                    <ul class="space-y-2">
-                        <li>GitHub</li>
-                        <li>VSCode</li>
-                        <li>Firebase</li>
-                        <li>Google APIs</li>
-                        <li>React Native</li>
-                        <li>Telegram Bot API</li>
-                    </ul>
-                </div>
-                <div class="bg-gray-700 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-4 text-blue-400">Databases</h3>
-                    <ul class="space-y-2">
-                        <li>SQL</li>
-                        <li>Firestore</li>
-                        <li>SQLite</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="py-20 bg-gray-900">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-800 rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/200" alt="Text Editor Project" class="w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Text Editor with HTML Tags</h3>
-                        <p class="text-gray-400 mb-4">A custom text editor for HTML with automatic tag formatting</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
+    <div id="cursor" class="cursor-glow hidden md:block"></div>
+    <div id="app">
+        <!-- Main Content Container -->
+        <div id="mainContent" class="page-transition">
+            <!-- Navigation -->
+            <nav class="fixed w-full bg-gray-900 bg-opacity-90 backdrop-blur-sm z-50">
+                <div class="container mx-auto px-4 py-4">
+                    <div class="flex justify-between items-center">
+                        <a href="#" class="text-2xl font-bold text-blue-400" onclick="navigateToHome(event)">SK</a>
+                        <div class="space-x-6">
+                            <a href="#" class="nav-link" onclick="navigateToHome(event)">Home</a>
+                            <a href="#projects" class="nav-link">Projects</a>
+                            <a href="#contact" class="nav-link">Contact</a>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-800 rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/200" alt="Movie Tracker App" class="w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Movie Tracker App</h3>
-                        <p class="text-gray-400 mb-4">React Native app for tracking and rating watched movies</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">React</span>
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">SQLite</span>
+            </nav>
+
+            <!-- Hero Section -->
+            <header class="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-gray-900 pt-16">
+                <div class="container mx-auto px-4 py-16 text-center" data-aos="fade-up">
+                    <img src="/api/placeholder/150/150" alt="Profile Picture" class="rounded-full mx-auto mb-8 border-4 border-blue-500 hover:border-blue-400 transition-colors duration-300">
+                    <h1 class="text-5xl font-bold mb-4 animate-fade-in">Sumit Kumar</h1>
+                    <p class="text-xl text-blue-400 mb-8">Aspiring Software Developer | BCA Student</p>
+                    <div class="flex justify-center space-x-4 mb-8">
+                        <a href="mailto:1904sumitkumar@gmail.com" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/sumit-kumar-a3a249335" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="tel:8604041703" class="text-gray-300 hover:text-blue-400 transition-colors duration-300">
+                            <i class="fas fa-phone text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Projects Section -->
+            <section id="projects" class="py-20 bg-gray-900">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up">Featured Projects</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Project Cards -->
+                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                             onclick="showProject('text-editor')" data-aos="fade-up" data-aos-delay="100">
+                            <img src="/api/placeholder/400/200" alt="Text Editor Project" class="w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">Text Editor with HTML Tags</h3>
+                                <p class="text-gray-400 mb-4">A custom text editor for HTML with automatic tag formatting</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                             onclick="showProject('movie-tracker')" data-aos="fade-up" data-aos-delay="200">
+                            <img src="/api/placeholder/400/200" alt="Movie Tracker App" class="w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">Movie Tracker App</h3>
+                                <p class="text-gray-400 mb-4">React Native app for tracking and rating watched movies</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">React</span>
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">SQLite</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                             onclick="showProject('sms-reader')" data-aos="fade-up" data-aos-delay="300">
+                            <img src="/api/placeholder/400/200" alt="SMS Reader App" class="w-full">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2">SMS Reader App</h3>
+                                <p class="text-gray-400 mb-4">React Native app for categorizing SMS messages</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
+                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">TypeScript</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-800 rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/200" alt="SMS Reader App" class="w-full">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">SMS Reader App</h3>
-                        <p class="text-gray-400 mb-4">React Native app for categorizing SMS messages</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
-                            <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">TypeScript</span>
-                        </div>
-                    </div>
+            </section>
+        </div>
+
+        <!-- Project Detail Template -->
+        <div id="projectDetail" class="fixed inset-0 bg-gray-900 overflow-y-auto hidden page-transition">
+            <div class="min-h-screen container mx-auto px-4 py-20">
+                <button onclick="closeProject()" class="fixed top-8 right-8 text-3xl text-gray-400 hover:text-white">&times;</button>
+                <div id="projectContent" class="max-w-4xl mx-auto">
+                    <!-- Project content will be dynamically inserted here -->
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Education & Experience -->
-    <section class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Education</h2>
-            <div class="max-w-2xl mx-auto bg-gray-700 rounded-lg p-6">
-                <h3 class="text-xl font-bold text-blue-400">Bachelor of Computer Applications (BCA)</h3>
-                <p class="text-gray-300">Rajashree School of Management and Technology</p>
-                <p class="text-gray-400">Expected Graduation: 2025</p>
-            </div>
-        </div>
-    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
 
-    <!-- Contact Section -->
-    <section class="py-20 bg-gray-900">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-8">Let's Connect</h2>
-            <p class="text-xl text-gray-400 mb-8">Open to opportunities and collaborations</p>
-            <div class="flex justify-center space-x-6">
-                <a href="mailto:1904sumitkumar@gmail.com" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full">
-                    Send Email
-                </a>
-                <a href="https://www.linkedin.com/in/sumit-kumar-a3a249335" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-full">
-                    LinkedIn Profile
-                </a>
-            </div>
-        </div>
-    </section>
+        // Cursor glow effect
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
 
-    <footer class="bg-gray-800 py-8">
-        <div class="container mx-auto px-4 text-center text-gray-400">
-            <p>© 2024 Sumit Kumar. All rights reserved.</p>
-        </div>
-    </footer>
+        // Project data
+        const projects = {
+            'text-editor': {
+                title: 'Text Editor with HTML Tags',
+                description: `
+                    <div class="space-y-6">
+                        <h1 class="text-4xl font-bold text-blue-400 mb-8">Text Editor with HTML Tags</h1>
+                        
+                        <div class="mb-8">
+                            <img src="/api/placeholder/800/400" alt="Text Editor Interface" class="rounded-lg w-full mb-4">
+                            <p class="text-gray-400">A sophisticated text editor built for web developers to streamline HTML content creation.</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Key Features</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                                <li>Real-time HTML preview</li>
+                                <li>Automatic tag formatting</li>
+                                <li>Syntax highlighting</li>
+                                <li>Custom shortcuts for common HTML elements</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">HTML5</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">CSS3</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">CodeMirror</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Development Process</h2>
+                            <p class="text-gray-300">The development process involved careful consideration of user experience and performance optimization. Key challenges included implementing real-time preview functionality and ensuring cross-browser compatibility.</p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4">Project Links</h2>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'movie-tracker': {
+                title: 'Movie Tracker App',
+                description: `
+                    <div class="space-y-6">
+                        <h1 class="text-4xl font-bold text-blue-400 mb-8">Movie Tracker App</h1>
+                        
+                        <div class="mb-8">
+                            <img src="/api/placeholder/800/400" alt="Movie Tracker App Interface" class="rounded-lg w-full mb-4">
+                            <p class="text-gray-400">A React Native application for movie enthusiasts to track and rate their watched movies.</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Key Features</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                                <li>Personal movie watchlist</li>
+                                <li>Rating and review system</li>
+                                <li>Movie recommendations</li>
+                                <li>Offline data storage</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">SQLite</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">TMDb API</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Development Process</h2>
+                            <p class="text-gray-300">Built with a focus on offline-first functionality and smooth user experience. Implemented local storage using SQLite for reliable data persistence.</p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4">Project Links</h2>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Download App</a>
+                                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-const duration-300">GitHub Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'sms-reader': {
+                title: 'SMS Reader App',
+                description: `
+                    <div class="space-y-6">
+                        <h1 class="text-4xl font-bold text-blue-400 mb-8">SMS Reader App</h1>
+                        
+                        <div class="mb-8">
+                            <img src="/api/placeholder/800/400" alt="SMS Reader App Interface" class="rounded-lg w-full mb-4">
+                            <p class="text-gray-400">An intelligent SMS categorization app built with React Native and TypeScript.</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Key Features</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                                <li>Automatic SMS categorization</li>
+                                <li>Financial transaction tracking</li>
+                                <li>Expense analysis</li>
+                                <li>Category-based filtering</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">TypeScript</span>
+                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">SMS Retrieval API</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Development Process</h2>
+                            <p class="text-gray-300">Implemented sophisticated pattern matching algorithms for accurate message categorization. Focused on privacy and security in handling sensitive SMS data.</p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4">Project Links</h2>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Download App</a>
+                                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Navigation functions
+        function showProject(projectId) {
+            const projectDetail = document.getElementById('projectDetail');
+            const projectContent = document.getElementById('projectContent');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Animate out main content
+            mainContent.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Hide main content
+                mainContent.style.display = 'none';
+                
+                // Show project detail
+                projectDetail.classList.remove('hidden');
+                projectContent.innerHTML = projects[projectId].description;
+                
+                // Animate in project detail
+                setTimeout(() => {
+                    projectDetail.style.opacity = '1';
+                    
+                    // Initialize AOS for new content
+                    AOS.refresh();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+            }, 300);
+        }
+
+        function closeProject() {
+            const projectDetail = document.getElementById('projectDetail');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Animate out project detail
+            projectDetail.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Hide project detail
+                projectDetail.classList.add('hidden');
+                
+                // Show main content
+                mainContent.style.display = 'block';
+                
+                // Animate in main content
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        function navigateToHome(event) {
+            event.preventDefault();
+            if (!document.getElementById('projectDetail').classList.contains('hidden')) {
+                closeProject();
+            }
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-enter-active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements with fade-enter class
+        document.querySelectorAll('.fade-enter').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Parallax scroll effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('[data-parallax]');
+            
+            parallaxElements.forEach(element => {
+                const speed = element.getAttribute('data-parallax');
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show initial content with fade
+            mainContent.style.opacity = '1';
+            
+            // Initialize skill pill animations with random delays
+            document.querySelectorAll('.skill-pill').forEach(pill => {
+                pill.style.animationDelay = `${Math.random() * 2}s`;
+            });
+        });
+    </script>
 </body>
 </html>
