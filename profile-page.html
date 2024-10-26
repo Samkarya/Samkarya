@@ -104,55 +104,96 @@
             </header>
 
             <!-- Projects Section -->
-            <section id="projects" class="py-20 bg-gray-900">
-                <div class="container mx-auto px-4">
-                    <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up">Featured Projects</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Project Cards -->
-                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
-                             onclick="showProject('text-editor')" data-aos="fade-up" data-aos-delay="100">
-                            <img src="/api/placeholder/400/200" alt="Text Editor Project" class="w-full">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2">Text Editor with HTML Tags</h3>
-                                <p class="text-gray-400 mb-4">A custom text editor for HTML with automatic tag formatting</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
-                             onclick="showProject('movie-tracker')" data-aos="fade-up" data-aos-delay="200">
-                            <img src="/api/placeholder/400/200" alt="Movie Tracker App" class="w-full">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2">Movie Tracker App</h3>
-                                <p class="text-gray-400 mb-4">React Native app for tracking and rating watched movies</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">React</span>
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">SQLite</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
-                             onclick="showProject('sms-reader')" data-aos="fade-up" data-aos-delay="300">
-                            <img src="/api/placeholder/400/200" alt="SMS Reader App" class="w-full">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2">SMS Reader App</h3>
-                                <p class="text-gray-400 mb-4">React Native app for categorizing SMS messages</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
-                                    <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">TypeScript</span>
-                                </div>
-                            </div>
-                        </div>
+           <section id="projects" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project Cards -->
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('text-editor')" data-aos="fade-up" data-aos-delay="100">
+                <img src="/api/placeholder/400/200" alt="Text Editor Project" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Text Editor with HTML Tags</h3>
+                    <p class="text-gray-400 mb-4">A custom text editor for HTML with automatic tag formatting, real-time preview, and syntax highlighting.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
 
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('movie-tracker')" data-aos="fade-up" data-aos-delay="200">
+                <img src="/api/placeholder/400/200" alt="Movie Tracker App" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Movie Tracker App</h3>
+                    <p class="text-gray-400 mb-4">React Native app for tracking, rating, and managing watched movies with SQLite for local storage.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">SQLite</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">Google Drive API</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('sms-reader')" data-aos="fade-up" data-aos-delay="300">
+                <img src="/api/placeholder/400/200" alt="SMS Reader App" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">SMS Reader App</h3>
+                    <p class="text-gray-400 mb-4">React Native app that reads and categorizes SMS messages into income and expense categories for user insights.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">TypeScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('html-editor')" data-aos="fade-up" data-aos-delay="400">
+                <img src="/api/placeholder/400/200" alt="HTML Code Editor" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">HTML Code Editor with Live Preview</h3>
+                    <p class="text-gray-400 mb-4">A web-based code editor offering real-time HTML, CSS, and JavaScript previews and responsive screen simulations.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('numerical-calculators')" data-aos="fade-up" data-aos-delay="500">
+                <img src="/api/placeholder/400/200" alt="Numerical Method Calculators" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Numerical Method Calculators</h3>
+                    <p class="text-gray-400 mb-4">Tools for solving mathematical methods like Bisection, Newton-Raphson, and more, featuring dynamic graph generation.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('bca-directory')" data-aos="fade-up" data-aos-delay="600">
+                <img src="/api/placeholder/400/200" alt="BCA Syllabus Directory" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">BCA Syllabus Directory</h3>
+                    <p class="text-gray-400 mb-4">A searchable and paginated directory of BCA syllabi, featuring instant search and easy navigation.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">Java</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">Firebase</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
         <!-- Project Detail Template -->
         <div id="projectDetail" class="fixed inset-0 bg-gray-900 overflow-y-auto hidden page-transition">
             <div class="min-h-screen container mx-auto px-4 py-20">
@@ -180,144 +221,128 @@
         });
 
         // Project data
-        const projects = {
-            'text-editor': {
-                title: 'Text Editor with HTML Tags',
-                description: `
-                    <div class="space-y-6">
-                        <h1 class="text-4xl font-bold text-blue-400 mb-8">Text Editor with HTML Tags</h1>
-                        
-                        <div class="mb-8">
-                            <img src="/api/placeholder/800/400" alt="Text Editor Interface" class="rounded-lg w-full mb-4">
-                            <p class="text-gray-400">A sophisticated text editor built for web developers to streamline HTML content creation.</p>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Key Features</h2>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300">
-                                <li>Real-time HTML preview</li>
-                                <li>Automatic tag formatting</li>
-                                <li>Syntax highlighting</li>
-                                <li>Custom shortcuts for common HTML elements</li>
-                            </ul>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">HTML5</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">CSS3</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">CodeMirror</span>
-                            </div>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Development Process</h2>
-                            <p class="text-gray-300">The development process involved careful consideration of user experience and performance optimization. Key challenges included implementing real-time preview functionality and ensuring cross-browser compatibility.</p>
-                        </div>
-
-                        <div>
-                            <h2 class="text-2xl font-bold mb-4">Project Links</h2>
-                            <div class="flex space-x-4">
-                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
-                                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            'movie-tracker': {
-                title: 'Movie Tracker App',
-                description: `
-                    <div class="space-y-6">
-                        <h1 class="text-4xl font-bold text-blue-400 mb-8">Movie Tracker App</h1>
-                        
-                        <div class="mb-8">
-                            <img src="/api/placeholder/800/400" alt="Movie Tracker App Interface" class="rounded-lg w-full mb-4">
-                            <p class="text-gray-400">A React Native application for movie enthusiasts to track and rate their watched movies.</p>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Key Features</h2>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300">
-                                <li>Personal movie watchlist</li>
-                                <li>Rating and review system</li>
-                                <li>Movie recommendations</li>
-                                <li>Offline data storage</li>
-                            </ul>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">SQLite</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">TMDb API</span>
-                            </div>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Development Process</h2>
-                            <p class="text-gray-300">Built with a focus on offline-first functionality and smooth user experience. Implemented local storage using SQLite for reliable data persistence.</p>
-                        </div>
-
-                        <div>
-                            <h2 class="text-2xl font-bold mb-4">Project Links</h2>
-                            <div class="flex space-x-4">
-                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Download App</a>
-                                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-const duration-300">GitHub Repository</a>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            'sms-reader': {
-                title: 'SMS Reader App',
-                description: `
-                    <div class="space-y-6">
-                        <h1 class="text-4xl font-bold text-blue-400 mb-8">SMS Reader App</h1>
-                        
-                        <div class="mb-8">
-                            <img src="/api/placeholder/800/400" alt="SMS Reader App Interface" class="rounded-lg w-full mb-4">
-                            <p class="text-gray-400">An intelligent SMS categorization app built with React Native and TypeScript.</p>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Key Features</h2>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300">
-                                <li>Automatic SMS categorization</li>
-                                <li>Financial transaction tracking</li>
-                                <li>Expense analysis</li>
-                                <li>Category-based filtering</li>
-                            </ul>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Technologies Used</h2>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">React Native</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">TypeScript</span>
-                                <span class="px-3 py-1 bg-blue-900 rounded-full text-sm">SMS Retrieval API</span>
-                            </div>
-                        </div>
-
-                        <div class="mb-8">
-                            <h2 class="text-2xl font-bold mb-4">Development Process</h2>
-                            <p class="text-gray-300">Implemented sophisticated pattern matching algorithms for accurate message categorization. Focused on privacy and security in handling sensitive SMS data.</p>
-                        </div>
-
-                        <div>
-                            <h2 class="text-2xl font-bold mb-4">Project Links</h2>
-                            <div class="flex space-x-4">
-                                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Download App</a>
-                                <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
-                            </div>
-                        </div>
-                    </div>
-                `
-            }
-        };
+       const projects = {
+    'text-editor': {
+        title: 'Text Editor with HTML Tags',
+        description: `
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-blue-400 mb-8">Text Editor with HTML Tags</h1>
+                <img src="/api/placeholder/800/400" alt="Text Editor Interface" class="rounded-lg w-full mb-4">
+                <p class="text-gray-400">A sophisticated text editor built for web developers to streamline HTML content creation, featuring real-time previews and automatic tag formatting.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Real-time HTML preview</li>
+                    <li>Automatic tag formatting</li>
+                    <li>Syntax highlighting</li>
+                    <li>Custom shortcuts for common HTML elements</li>
+                </ul>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                </div>
+            </div>
+        `
+    },
+    'movie-tracker': {
+        title: 'Movie Tracker App',
+        description: `
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-blue-400 mb-8">Movie Tracker App</h1>
+                <img src="/api/placeholder/800/400" alt="Movie Tracker App Interface" class="rounded-lg w-full mb-4">
+                <p class="text-gray-400">A React Native app that allows users to track, rate, and manage their watched movies. It features SQLite for local storage and a Google Drive sync for data backup.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Track and rate movies</li>
+                    <li>CRUD functionality with SQLite</li>
+                    <li>Sync with Google Drive for backup</li>
+                    <li>Offline support with smooth user experience</li>
+                </ul>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                </div>
+            </div>
+        `
+    },
+    'sms-reader': {
+        title: 'SMS Reader App',
+        description: `
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-blue-400 mb-8">SMS Reader App</h1>
+                <img src="/api/placeholder/800/400" alt="SMS Reader App Interface" class="rounded-lg w-full mb-4">
+                <p class="text-gray-400">A React Native app that reads and categorizes SMS messages into income and expense categories, providing users with a financial overview through charts and lists.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Automatic SMS parsing and categorization</li>
+                    <li>Displays expense and income trends</li>
+                    <li>Interactive charts for financial insights</li>
+                    <li>Secure data handling</li>
+                </ul>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                </div>
+            </div>
+        `
+    },
+    'html-editor': {
+        title: 'HTML Code Editor with Live Preview',
+        description: `
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-blue-400 mb-8">HTML Code Editor with Live Preview</h1>
+                <img src="/api/placeholder/800/400" alt="HTML Code Editor Interface" class="rounded-lg w-full mb-4">
+                <p class="text-gray-400">A user-friendly, web-based code editor that provides real-time previews for HTML, CSS, and JavaScript. Ideal for beginners learning web development.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Responsive live preview for HTML, CSS, and JavaScript</li>
+                    <li>Intuitive UI with dark mode support</li>
+                    <li>Customizable editor settings</li>
+                    <li>Supports importing and exporting code snippets</li>
+                </ul>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                </div>
+            </div>
+        `
+    },
+    'numerical-calculators': {
+        title: 'Numerical Method Calculators',
+        description: `
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-blue-400 mb-8">Numerical Method Calculators</h1>
+                <img src="/api/placeholder/800/400" alt="Numerical Method Calculators Interface" class="rounded-lg w-full mb-4">
+                <p class="text-gray-400">A set of JavaScript-based tools for solving mathematical methods like Bisection, Newton-Raphson, and more. Features dynamic graph generation and detailed step-by-step solutions.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Solves Bisection, Newton-Raphson, and other methods</li>
+                    <li>Dynamic graph plotting with step-by-step interval updates</li>
+                    <li>Provides detailed intermediate calculations</li>
+                    <li>User-friendly input validation</li>
+                </ul>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                </div>
+            </div>
+        `
+    },
+    'bca-directory': {
+        title: 'BCA Syllabus Directory',
+        description: `
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-blue-400 mb-8">BCA Syllabus Directory</h1>
+                <img src="/api/placeholder/800/400" alt="BCA Syllabus Directory Interface" class="rounded-lg w-full mb-4">
+                <p class="text-gray-400">A comprehensive directory of BCA syllabi, allowing users to search and navigate through course outlines with ease. Designed for students and educators.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-300">
+                    <li>Instant search functionality</li>
+                    <li>Pagination for easy navigation</li>
+                    <li>Structured course outlines for better readability</li>
+                    <li>Firebase integration for dynamic updates</li>
+                </ul>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Live Demo</a>
+                    <a href="#" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-colors duration-300">GitHub Repository</a>
+                </div>
+            </div>
+        `
+    }
+};
 
         // Navigation functions
         function showProject(projectId) {
