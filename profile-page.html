@@ -110,6 +110,21 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Project Cards -->
             <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
+                 onclick="showProject('eduContent-Hub')" data-aos="fade-up" data-aos-delay="100">
+                <img src="/api/placeholder/400/200" alt="Edu Content Hub" class="w-full">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Edu Content Hub</h3>
+                    <p class="text-gray-400 mb-4">A one stop solution for students Where they can find different Resources, and rate, bookmark them.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">HTML</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">CSS</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">JavaScript</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">Firebase Auth</span>
+                        <span class="skill-pill px-3 py-1 bg-blue-900 rounded-full text-sm">Firebase FireStore</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card bg-gray-800 rounded-lg overflow-hidden cursor-pointer" 
                  onclick="showProject('text-editor')" data-aos="fade-up" data-aos-delay="100">
                 <img src="/api/placeholder/400/200" alt="Text Editor Project" class="w-full">
                 <div class="p-6">
@@ -240,6 +255,29 @@
 
         // Project data
        const projects = {
+          'eduContent-Hub': {
+    title: 'EduContent Hub',
+    description: `
+        <div class="space-y-6">
+            <h1 class="text-4xl font-bold text-blue-400 mb-8">EduContent Hub</h1>
+            <img src="/api/placeholder/800/400" alt="EduContent Hub Overview" class="rounded-lg w-full mb-4">
+            <p class="text-gray-400">
+                EduContent Hub is your gateway to quality learning resources designed to help students and professionals excel in their academic and career journeys. Explore expertly crafted content, interactive tools, and engaging materials tailored for effective learning.
+            Uses Firebase to authenticate and store user data.
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                <li>Access a diverse library of educational resources</li>
+                <li>Interactive and user-friendly interface</li>
+                <li>Content curated for students and professionals</li>
+                <li>Seamless navigation for a smooth learning experience</li>
+                <li>Perform Operations Like rating and bookmarks</li>
+            </ul>
+            <div class="flex space-x-4">
+                <a href="https://bcaexamprep.blogspot.com/2024/11/educontent-hub-your-gateway-to-quality-learning-resources.html" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-300">Visit Website</a>
+            </div>
+        </div>
+    `
+          },
     'text-editor': {
         title: 'Text to HTML Tag Editor',
         description: `
