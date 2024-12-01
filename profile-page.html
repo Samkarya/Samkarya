@@ -59,6 +59,113 @@
         .nav-link:hover::after {
             width: 100%;
         }
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.popup-content {
+    background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 550px;
+    width: 90%;
+    position: relative;
+    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-30px) scale(0.95);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.popup-message {
+    color: #2c3e50;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.8;
+}
+
+.popup-message p {
+    margin: 1rem 0;
+    font-size: 1.05rem;
+    letter-spacing: 0.2px;
+}
+
+.popup-message p:first-child {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1a73e8;
+    margin-bottom: 1.5rem;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f1f3f4;
+    border: none;
+    font-size: 1.2rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #5f6368;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    background: #e8eaed;
+    color: #202124;
+    transform: scale(1.05);
+}
+
+.signature {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    color: #5f6368;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.signature br {
+    margin: 0.3rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .popup-content {
+        padding: 2rem;
+        width: 95%;
+    }
+    
+    .popup-message p {
+        font-size: 1rem;
+    }
+    
+    .popup-message p:first-child {
+        font-size: 1.2rem;
+    }
+}
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
@@ -237,6 +344,42 @@
     </div>
 
 
+<div class="popup-overlay" id="popup">
+    <div class="popup-content">
+        <button class="close-button" onclick="closePopup()">×</button>
+        <div class="popup-message">
+            <p>🙏 Thank you for visiting!</p>
+            <p>I apologize that my portfolio site is currently a work in progress. While the core structure is in place, I'm actively working on adding project images and polishing various elements to ensure the best presentation of my work.</p>
+            <p>I appreciate your patience during this time, and I invite you to check back soon to see the completed version. In the meantime, if you'd like to discuss anything, please don't hesitate to reach out through the contact information provided.</p>
+            <div class="signature">
+                Best regards,<br>
+                <strong>Sumit Kumar</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        document.getElementById('popup').style.display = 'flex';
+    }
+    
+    function closePopup() {
+        const popup = document.getElementById('popup');
+        popup.style.opacity = '0';
+        popup.style.transition = 'opacity 0.3s ease-out';
+        setTimeout(() => {
+            popup.style.display = 'none';
+            popup.style.opacity = '1';
+        }, 300);
+    }
+    
+    document.getElementById('popup').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closePopup();
+        }
+    });
+</script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
