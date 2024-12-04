@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        body {
+            margin: 0;
+            background: #1a1a1a;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .project-card {
+            background: #2a2a2a;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-images {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-image.active {
+            opacity: 1;
+        }
+
+        .image-nav {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+
+        .image-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .image-dot.active {
+            background: white;
+        }
+
+        .project-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-preview {
+            opacity: 1;
+        }
+
+        .preview-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .preview-button {
+            transform: translateY(0);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin: 0 0 1rem 0;
+            color: #4ECDC4;
+        }
+
+        .project-description {
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: #3a3a3a;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #4ECDC4;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #2a2a2a;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            border-radius: 15px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-gallery img {
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-link {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .demo-link {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+        }
+
+        .code-link {
+            background: #3a3a3a;
+            color: white;
+        }
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .content {
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 2.8rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .back-home-button {
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+        top: 0.8rem;
+        left: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .project-card {
+        padding: 1rem;
+    }
+
+    .project-content {
+        padding: 1rem;
+    }
+
+    .project-title {
+        font-size: 1.3rem;
+    }
+
+    .project-description {
+        -webkit-line-clamp: 2;
+    }
+
+    .back-home-button {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.5rem;
+        top: 0.5rem;
+        left: 0.5rem;
+    }
+    .project-links{
+        font-size:small;
+    }
+}
+        .back-home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0; /* Remove auto margins */
+    padding: 0.5rem 0.5rem;
+    width: fit-content;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #4ECDC4, #FF6B6B);
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Fix the position */
+    top: 1rem; /* Distance from the top */
+    left: 1rem; /* Distance from the left */
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.back-home-button i {
+    font-size: 1.3rem; /* Size of the icon */
+    vertical-align: middle;
+}
+
+.back-home-button:hover {
+    background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="content">
+    <a href="D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/portfolio-page.html" class="back-home-button">
+        <i class="fas fa-home"></i></a>
+    <h1 class="title">My Projects</h1>
+    <div class="projects-grid" id="projectsGrid">
+        <!-- Projects will be added dynamically -->
+    </div>
+</div>
+
+    <!-- Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2 class="project-title" id="modalTitle"></h2>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be added dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample projects data structure
+        const projectsData = [
+    {
+        title: "BCA Exam Preparation",
+        description: "A website for BCA students to access study materials, blogs, MCQs, quizzes, and typing games.",
+        images: [
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/BCAEXAMPREP/heroSection.PNG",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/BCAEXAMPREP/mainpage.png",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/BCAEXAMPREP/antiadbocker.PNG",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/BCAEXAMPREP/userAccountDashBoard.PNG",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/BCAEXAMPREP/menuAndFooter.PNG",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/BCAEXAMPREP/404page.png",
+        ],
+        tags: ["HTML", "CSS", "JavaScript", "Firebase", "Google Blogger"],
+        demoLink: "https://bcaexamprep.blogspot.com", // Replace with actual link if available
+        codeLink: "https://github.com/Samkarya", // Replace with project-specific link if available
+        longDescription: "Created for BCA students to access study resources, MCQs, and typing games. Includes login system, analytics, and commenting widget.",
+        features: [
+            "Login system with Firebase",
+            "Search and filter resources",
+            "Comment widget and user-friendly interface"
+        ]
+    },
+    {
+        title: "EduContentHub",
+        description: "Indexed educational resources like articles, videos, and PDFs for easy discovery.",
+        images: [
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/EduContentHub/recentPAge_Submit.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/EduContentHub/working_filter.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/EduContentHub/nonauthPage.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/EduContentHub/authenFiterAndTrendingPage.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/EduContentHub/admin_dashboard.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript", "Firebase"],
+        demoLink: "https://bcaexamprep.blogspot.com/2024/11/educontent-hub-your-gateway-to-quality-learning-resources.html",
+        codeLink: "https://github.com/Samkarya/bcaexamprep/tree/main/EduResources/assets",
+        longDescription: "Provides a searchable index for educational content with features like bookmarks and user authorization.",
+        features: [
+            "Searchable index for resources",
+            "Category-based filtering",
+            "Bookmarks, rating and view counters"
+        ]
+    },
+    {
+        title: "Quiz Master Pro",
+        description: "A time-based quiz interface for practicing MCQs.",
+        images: [
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/quizmaster/interface.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/quizmaster/quizLayout.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/quizmaster/archivementPOPup.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript", "JSON"],
+        demoLink: "https://bcaexamprep.blogspot.com/2024/10/quiz-master-pro.html",
+        codeLink: "https://github.com/Samkarya/bcaexamprep/tree/main/Quiz-game",
+        longDescription: "Provides a random MCQ quiz interface with timers and scoring features.",
+        features: [
+            "Random MCQ fetch",
+            "Timer and scoring mechanism",
+            "Adjustable time frames"
+        ]
+    },
+    {
+        title: "Typing Code Race",
+        description: "A typing tool for improving WPM with coding-related texts.",
+        images: [
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/typingcodeRace/mainInterface.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/typingcodeRace/typingInterface.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript"],
+        demoLink: "https://bcaexamprep.blogspot.com/2024/10/typing-code-race-game.html",
+        codeLink: "https://github.com/Samkarya/bcaexamprep/tree/main/Typing-code-race",
+        longDescription: "Offers practice for coding and paragraph typing with adjustable settings.",
+        features: [
+            "Coding mode for developers",
+            "Paragraph mode for general typing",
+            "Dedicated practice mode"
+        ]
+    },
+    {
+        title: "Telegram Bot for MCQs",
+        description: "A Python-based Telegram bot sending daily MCQs to a group.",
+        images: [
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/teleBot/sendMcq.png",
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/teleBot/codeonandrooid.png"
+        ],
+        tags: ["Python", "Telegram Bot API"],
+        demoLink: "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/message-page.html",
+        codeLink: "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/message-page.html",
+        longDescription: "Automates delivery of daily MCQs to Telegram groups using the Telegram Bot API.",
+        features: [
+            "Daily MCQs delivery",
+            "Customizable question sets",
+            "Easy group integration"
+        ]
+    },
+    {
+        title: "Sitemap URL Extractor",
+        description: "A tool for extracting URLs from sitemap XML.",
+        images: [
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/sitemapviewer/interface.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/sitemapviewer/extractedUrls.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/sitemapviewer/copyAndSave.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript"],
+        demoLink: "https://your-demo-link.com",
+        codeLink: "https://github.com/Samkarya",
+        longDescription: "Parses sitemap XML files to extract URLs for SEO or other purposes.",
+        features: [
+            "Parse sitemap XML",
+            "Copy extracted URLs",
+            "Simple user interface"
+        ]
+    },
+    {
+        title: "HTML Editor",
+        description: "A tool for live HTML coding with preview and quick toolbar.",
+        images: [
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/htmlEditorImpproved/interfaceUI.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/htmlEditorImpproved/userGuide.PNG",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/htmlEditorImpproved/democode.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript"],
+        demoLink: "https://samkarya.github.io/Profile-Page/html_editor_improved.html",
+        codeLink: "https://github.com/Samkarya/Profile-Page/blob/main/html_editor_improved.html",
+        longDescription: "Provides a live preview of HTML code along with a quick toolbar for inserting tags.",
+        features: [
+            "Live HTML preview",
+            "Quick tag insertion",
+            "User-friendly interface"
+        ]
+    },
+    {
+        title: "Movie Tracker App",
+        description: "An offline app for managing movies/TV shows watched or planned.",
+        images: [
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MovieRecorder/addMenu.png",
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MovieRecorder/movieGrid.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MovieRecorder/blankInterface.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MovieRecorder/delete.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MovieRecorder/movieList.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MovieRecorder/setting.png"
+        ],
+        tags: ["React Native", "TypeScript", "SQLite"],
+        demoLink: "https://drive.google.com/drive/folders/1Ef4AJIsAPiwoU607sGX6XJG6PkaRolQq?usp=drive_link",
+        codeLink: "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/message-page.html",
+        longDescription: "Helps users organize and manage their watchlists with rating and genre tracking.",
+        features: [
+            "Offline CRUD operations",
+            "Genre and rating management",
+            "Watchlist organization"
+        ]
+    },
+    {
+        title: "Expense Record App",
+        description: "An app for analyzing UPI and SMS transaction messages.",
+        images: [
+        "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/Permission controller.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/transations.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/darkmode.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/darkmodeTransactions.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/addTransaction.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/Analysis.png",
+"D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/MoneyExpenseApp/categoryAddder.png"
+        ],
+        tags: ["React Native", "TypeScript", "Node.js"],
+        demoLink: "https://drive.google.com/drive/folders/1IVZD-YFP5In26komY4_m-e6lEN0IIONa?usp=drive_link",
+        codeLink: "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/message-page.html",
+        longDescription: "Tracks transactions and categorizes expenses and income automatically.",
+        features: [
+            "Categorized transaction tracking",
+            "Total expense/income calculation",
+            "Editable categories"
+        ]
+    },
+    {
+        title: "BCA Syllabus Directory",
+        description: "Indexed and compared university syllabi.",
+        images: [
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/syllabusDirectory/mainpage.PNG",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/syllabusDirectory/navigation.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript"],
+        demoLink: "https://bcaexamprep.blogspot.com/2024/10/bachelor-of-computer-applications-syllabus-directory.html",
+        codeLink: "https://github.com/Samkarya/bcaexamprep/tree/main/bca-syllabus",
+        longDescription: "Organized university syllabi for easy comparison and indexing.",
+        features: [
+            "Indexing of syllabi",
+            "Comparison tools",
+            "Simple navigation"
+        ]
+    },
+    {
+        title: "Numerical Method Calculators",
+        description: "A set of web-based calculators for solving equations and visualizing roots.",
+        images: [
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/numerical/bisection.PNG",
+            "D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/projectMedia/numerical/calculation.PNG"
+        ],
+        tags: ["HTML", "CSS", "JavaScript", "Chart.js"],
+        demoLink: "https://bcaexamprep.blogspot.com/p/portfolio-hub-tools-projects.html",
+        codeLink: "https://github.com/Samkarya/bcaexamprep/tree/main/tools-projects",
+        longDescription: "Web calculators to solve equations and plot results with charts.",
+        features: [
+            "Equation solving",
+            "Root visualization",
+            "Interactive charts"
+        ]
+    }
+];
+
+
+        function createProjectCard(project, index) {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            
+            const imagesHTML = project.images.map((img, imgIndex) => `
+                <img src="${img}" 
+                     alt="${project.title} image ${imgIndex + 1}" 
+                     class="project-image ${imgIndex === 0 ? 'active' : ''}"
+                     data-index="${imgIndex}">
+            `).join('');
+
+            const dotsHTML = project.images.map((_, imgIndex) => `
+                <div class="image-dot ${imgIndex === 0 ? 'active' : ''}" 
+                     onclick="changeImage(${index}, ${imgIndex})"></div>
+            `).join('');
+
+            card.innerHTML = `
+                <div class="project-images">
+                    ${imagesHTML}
+                    <div class="image-nav">
+                        ${dotsHTML}
+                    </div>
+                    <div class="project-preview">
+                        <button class="preview-button" onclick="openModal(${index})">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h2 class="project-title">${project.title}</h2>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tags">
+                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function changeImage(projectIndex, imageIndex) {
+            const projectCards = document.querySelectorAll('.project-card');
+            const card = projectCards[projectIndex];
+            
+            // Update images
+            card.querySelectorAll('.project-image').forEach(img => {
+                img.classList.remove('active');
+            });
+            card.querySelector(`.project-image[data-index="${imageIndex}"]`).classList.add('active');
+            
+            // Update dots
+            card.querySelectorAll('.image-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            card.querySelectorAll('.image-dot')[imageIndex].classList.add('active');
+        }
+
+        function openModal(projectIndex) {
+            const project = projectsData[projectIndex];
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = project.title;
+            modalBody.innerHTML = `
+                <div class="modal-gallery">
+                    ${project.images.map(img => `
+                        <img src="${img}" alt="${project.title}">
+                    `).join('')}
+                </div>
+                <p>${project.longDescription}</p>
+                <h3>Key Features</h3>
+                <ul>
+                    ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+                <div class="project-links">
+                    ${project.demoLink ? `
+                        <a href="${project.demoLink}" class="project-link demo-link" target="_blank">
+                            Live Demo
+                        </a>
+                    ` : ''}
+                    ${project.codeLink ? `
+                        <a href="${project.codeLink}" class="project-link code-link" target="_blank">
+                            View Code
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Initialize the page
+        async function initializePage() {
+            try {
+                const response = await fetch('projects.json');
+                const projects = await response.json();
+                const projectsGrid = document.getElementById('projectsGrid');
+                projects.forEach((project, index) => {
+                    projectsGrid.appendChild(createProjectCard(project, index));
+                });
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                // Use sample data if loading fails
+                const projectsGrid = document.getElementById('projectsGrid');
+                projectsData.forEach((project, index) => {
+                    projectsGrid.appendChild(createProjectCard(project, index));
+                });
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Load everything when the page loads
+        window.addEventListener('load', initializePage);
+    </script>
+</body>
+</html>
