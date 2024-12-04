@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      background: #1a1a1a;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+    
+    .loader-container {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      background: #1a1a1a;
+      animation: containerFade 0.5s ease-out forwards;
+      animation-delay: 4s;
+    }
+    
+    .grid {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+    
+    .block {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      opacity: 0;
+      border-radius: 4px;
+      transform-origin: center;
+    }
+    
+    @keyframes containerFade {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+    
+    @keyframes blockDrop {
+      0% {
+        transform: translateY(-200px) rotate(180deg);
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      60% {
+        transform: translateY(0) rotate(0deg);
+      }
+      80% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes blockPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.95);
+      }
+    }
+    
+    .content {
+      opacity: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      animation: contentFade 1s ease-in forwards;
+      animation-delay: 3.5s;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    @keyframes contentFade {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    
+    .about-me {
+      flex: 1;
+      max-width: 60%;
+    }
+    
+    .profile-image {
+      width: 400px;
+      height: 400px;
+      border-radius: 20px;
+      object-fit: cover;
+      background: #2a2a2a;
+    }
+    
+    .bio {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 2rem 0;
+      color: #e0e0e0;
+    }
+    
+    .links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    
+    .button {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.2s;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .primary-button {
+      background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+      color: white;
+    }
+    
+    .secondary-button {
+      background: #2a2a2a;
+      color: white;
+      border: 1px solid #3a3a3a;
+    }
+
+    .image-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .social-link {
+      color: white;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .social-link:hover {
+      color: #4ECDC4;
+    }
+
+    /* Skills Section */
+    .skills-section {
+      padding: 2rem 0;
+    }
+
+    .skills-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: #2a2a2a;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+
+    .skill-block:hover {
+      transform: translateY(-5px);
+    }
+
+    .skill-block img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .skill-block p {
+      margin: 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* Media Queries */
+    @media (max-width: 1024px) {
+      .content {
+        padding: 1.5rem;
+      }
+      
+      .profile-section {
+        gap: 1.5rem;
+      }
+      
+      .about-me {
+        max-width: 55%;
+      }
+      
+      .profile-image {
+        width: 350px;
+        height: 350px;
+      }
+      
+        .skills-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+    }
+
+    @media (max-width: 768px) {
+      .profile-section {
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+      
+      .about-me {
+        max-width: 100%;
+      }
+      
+      .profile-image {
+        width: 300px;
+        height: 300px;
+      }
+      
+      .title {
+        font-size: 2.5rem;
+        text-align: center;
+      }
+      
+      .bio {
+        text-align: center;
+      }
+      
+      .links {
+        justify-content: center;
+      }
+      
+      .skills-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+    }
+
+    @media (max-width: 480px) {
+      .content {
+        padding: 1rem;
+      }
+      
+      .profile-image {
+        width: 250px;
+        height: 250px;
+      }
+      
+      .title {
+        font-size: 2rem;
+      }
+      
+      .bio {
+        font-size: 1rem;
+      }
+      
+      .button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    svg.tea {
+      --secondary: #c5cde9;
+    }
+
+    #teabag {
+      transform-origin: top center;
+      transform: rotate(3deg);
+      animation: swing 2s infinite;
+    }
+
+    #steamL {
+      stroke-dasharray: 13;
+      stroke-dashoffset: 13;
+      animation: steamLarge 2s infinite;
+    }
+
+    #steamR {
+      stroke-dasharray: 9;
+      stroke-dashoffset: 9;
+      animation: steamSmall 2s infinite;
+    }
+
+    @keyframes swing {
+      50% {
+        transform: rotate(-3deg);
+      }
+    }
+
+    @keyframes steamLarge {
+      0% {
+        stroke-dashoffset: 13;
+        opacity: 0.6;
+      }
+      100% {
+        stroke-dashoffset: 39;
+        opacity: 0;
+      }
+    }
+
+    @keyframes steamSmall {
+      10% {
+        stroke-dashoffset: 9;
+        opacity: 0.6;
+      }
+      80%, 100% {
+        stroke-dashoffset: 27;
+        opacity: 0;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="loader-container">
+    <div class="grid"></div>
+  </div>
+  
+  <div class="content">
+    <div class="profile-section">
+      <div class='about-me'>
+        <h1 class="title"><svg 
+          class="tea" 
+          width="37" 
+          height="48" 
+          viewBox="0 0 37 48" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M27.0819 17H3.02508C1.91076 17 1.01376 17.9059 1.0485 19.0197C1.15761 22.5177 1.49703 29.7374 2.5 34C4.07125 40.6778 7.18553 44.8868 8.44856 46.3845C8.79051 46.79 9.29799 47 9.82843 47H20.0218C20.639 47 21.2193 46.7159 21.5659 46.2052C22.6765 44.5687 25.2312 40.4282 27.5 34C28.9757 29.8188 29.084 22.4043 29.0441 18.9156C29.0319 17.8436 28.1539 17 27.0819 17Z" 
+            stroke="var(--secondary)" 
+            stroke-width="2" />
+          <path d="M29 23.5C29 23.5 34.5 20.5 35.5 25.4999C36.0986 28.4926 34.2033 31.5383 32 32.8713C29.4555 34.4108 28 34 28 34" 
+            stroke="var(--secondary)" 
+            stroke-width="2" />
+          <path id="teabag" 
+            fill="var(--secondary)" 
+            fill-rule="evenodd" 
+            clip-rule="evenodd" 
+            d="M16 25V17H14V25H12C10.3431 25 9 26.3431 9 28V34C9 35.6569 10.3431 37 12 37H18C19.6569 37 21 35.6569 21 34V28C21 26.3431 19.6569 25 18 25H16ZM11 28C11 27.4477 11.4477 27 12 27H18C18.5523 27 19 27.4477 19 28V34C19 34.5523 18.5523 35 18 35H12C11.4477 35 11 34.5523 11 34V28Z" />
+          <path id="steamL" 
+            d="M17 1C17 1 17 4.5 14 6.5C11 8.5 11 12 11 12" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke="var(--secondary)" />
+          <path id="steamR" 
+            d="M21 6C21 6 21 8.22727 19 9.5C17 10.7727 17 13 17 13" 
+            stroke="var(--secondary)" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" />
+        </svg> Sumit Kumar</h1>    
+      <p class="bio">I’m Sumit Kumar, a final-year BCA student at the Rajarshi School of Management & Technology, passionate about software development, web solutions, and mobile app development. Proficient in Python, JavaScript, React Native, and other modern tools, I create intuitive, user-centric applications.
+
+        Currently open to internships or job opportunities in software development, web development, mobile app development, content creation, or tech support roles.</p>
+      
+      <div class="links">
+        <a href="D:/hp/Documents/programs_coding_projects/REsume/sumitKumar/projects/project-page.html" class="button primary-button">View Projects</a>
+        <a href="https://drive.google.com/file/d/1TePxNhqmLvJb2r2nDL-pAg0TatwoFZvE/view?usp=sharing" class="button secondary-button">Download CV</a>
+        
+      </div>
+      </div>
+      <div class="image-section">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi5lRpdEMZ6Hyu-NVHDbBqu4FLGgwaGikH99Y45xeqDROGBBYKkNTontgbypQUwAId9eM7F3_kgMIThhp_9UsGAruaOjYj4Qs0ZcgcNOdyMGoaFkeEOmD3vXqmHv9A6x1SMGK3Sh6eImgFcFYP7FGjXE8aUCx-F3HAhQryqi-W4NpBwHUT2zf07KMg8L9UD/s1600/1000034335%20%283%29.jpg" alt="Sumit Kumar, Samkarya" class="profile-image">
+        <div class="social-links">
+          <a href="https://github.com/samkarya" class="social-link" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://linkedin.com/in/a3a249335" class="social-link" target="_blank">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="mailto:1904sumitkumar@gmail.com" class="social-link" target="_blank">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <!--<a href="https://twitter.com/johnanderson" class="social-link">
+            <i class="fab fa-twitter"></i>
+          </a>-->
+        </div>
+      </div>
+      <!--<div class="links">
+        <a href="/blog" class="button secondary-button">Blog</a>
+        <a href="/services" class="button secondary-button">Services</a>
+        <a href="/testimonials" class="button secondary-button">Testimonials</a>
+        <a href="/contact" class="button secondary-button">Contact</a>
+      </div>-->
+      </div>
+      <div class="skills-section">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+          
+        <!-- Programming Languages -->
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python">
+          <p>Python</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/javascript-2752148-2284965.png" alt="JavaScript">
+          <p>JavaScript</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/html5-40-1175193.png" alt="HTML">
+          <p>HTML</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/css3-11-1175239.png" alt="CSS">
+          <p>CSS</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript">
+          <p>TypeScript</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/c-57-1175191.png" alt="C">
+          <p>C</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++">
+          <p>C++</p>
+        </div>
+        <!-- Additional Expertise -->
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Logo_Google_Analytics.svg" alt="Google Analytics">
+          <p>Google Analytics</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/en/d/db/Snapseed_Logo.svg" alt="Snapseed">
+          <p>Snapseed</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/640px-Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop">
+          <p>Photoshop</p>
+        </div>
+<div class="skill-block">
+          <img src="https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://clarity.microsoft.com/&size=128" alt="Microsoft Clarity">
+          <p>Microsoft Clarity</p>
+        </div>
+
+        <!-- Tools & Platforms -->
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" style="filter: invert(1);" alt="GitHub">
+          <p>GitHub</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="VSCode">
+          <p>VSCode</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/node-js-1174925.png" alt="Node.js">
+          <p>Node.js</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/react-1-282599.png" alt="React Native">
+          <p>React Native</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Android_Studio_Logo_2024.svg" alt="Android Studio">
+          <p>Android Studio</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/firebase-3521427-2944871.png" alt="Firebase">
+          <p>Firebase</p>
+        </div>
+
+        <!-- Frameworks & Libraries -->
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/firebase-3521427-2944871.png" alt="Firebase Auth">
+          <p>Firebase Auth</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://cdn.iconscout.com/icon/free/png-256/firebase-3521427-2944871.png" alt="Firestore">
+          <p>Firestore</p>
+        </div>
+        <div class="skill-block">
+          <img src="https://www.chartjs.org/favicon.ico" alt="Chart.js">
+          <p>Chart.js</p>
+        </div>
+  
+</div>
+</div>
+</div>
+  
+  <script>
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFBE0B'];
+    const grid = document.querySelector('.grid');
+    const blockSize = 40;
+    const gap = 5;
+    const rows = 5;
+    const cols = 5;
+    
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const block = document.createElement('div');
+        block.className = 'block';
+        block.style.left = `${j * (blockSize + gap)}px`;
+        block.style.top = `${i * (blockSize + gap)}px`;
+        block.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        const delay = (i * cols + j) * 0.1;
+        block.style.animation = `
+          blockDrop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s forwards,
+          blockPulse 1.5s ease-in-out ${delay + 0.8}s infinite
+        `;
+        
+        grid.appendChild(block);
+      }
+    }
+  </script>
+</body>
+</html>
