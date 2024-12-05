@@ -160,6 +160,21 @@
             color: #4ECDC4;
         }
 
+        .project-card.glowing {
+            animation: glow 2s infinite;
+        }
+        
+         @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px #4ECDC4, 0 0 20px #4ECDC4, 0 0 30px #4ECDC4;
+            }
+            50% {
+                box-shadow: 0 0 20px #FF6B6B, 0 0 30px #FF6B6B, 0 0 40px #FF6B6B;
+            }
+            100% {
+                box-shadow: 0 0 10px #4ECDC4, 0 0 20px #4ECDC4, 0 0 30px #4ECDC4;
+            }
+        }
         /* Modal styles */
         .modal {
             position: fixed;
@@ -383,6 +398,7 @@
         // Sample projects data structure
         const projectsData = [
     {
+        id: "bca-exam-prep",
         title: "BCA Exam Preparation",
         description: "A website for BCA students to access study materials, blogs, MCQs, quizzes, and typing games.",
         images: [
@@ -404,6 +420,7 @@
         ]
     },
     {
+        id: "edu-hub",
         title: "EduContentHub",
         description: "Indexed educational resources like articles, videos, and PDFs for easy discovery.",
         images: [
@@ -424,6 +441,7 @@
         ]
     },
     {
+        id: "quiz-pro",
         title: "Quiz Master Pro",
         description: "A time-based quiz interface for practicing MCQs.",
         images: [
@@ -442,6 +460,7 @@
         ]
     },
     {
+        id: "type-race",
         title: "Typing Code Race",
         description: "A typing tool for improving WPM with coding-related texts.",
         images: [
@@ -459,6 +478,7 @@
         ]
     },
     {
+        id: "tele-bot",
         title: "Telegram Bot for MCQs",
         description: "A Python-based Telegram bot sending daily MCQs to a group.",
         images: [
@@ -476,6 +496,7 @@
         ]
     },
     {
+        id: "site-url",
         title: "Sitemap URL Extractor",
         description: "A tool for extracting URLs from sitemap XML.",
         images: [
@@ -494,6 +515,7 @@
         ]
     },
     {
+        id: "html-edit",
         title: "HTML Editor",
         description: "A tool for live HTML coding with preview and quick toolbar.",
         images: [
@@ -512,6 +534,7 @@
         ]
     },
     {
+        id: "movie-edit",
         title: "Movie Tracker App",
         description: "An offline app for managing movies/TV shows watched or planned.",
         images: [
@@ -533,6 +556,7 @@
         ]
     },
     {
+        id: "expense-track",
         title: "Expense Record App",
         description: "An app for analyzing UPI and SMS transaction messages.",
         images: [
@@ -555,6 +579,7 @@
         ]
     },
     {
+        id: "syllabus-directory",
         title: "BCA Syllabus Directory",
         description: "Indexed and compared university syllabi.",
         images: [
@@ -572,6 +597,7 @@
         ]
     },
     {
+        id: "numerical-calc",
         title: "Numerical Method Calculators",
         description: "A set of web-based calculators for solving equations and visualizing roots.",
         images: [
@@ -593,7 +619,8 @@
 
         function createProjectCard(project, index) {
             const card = document.createElement('div');
-            card.className = 'project-card';
+             card.className = 'project-card';
+            card.id = project.id;
             
             const imagesHTML = project.images.map((img, imgIndex) => `
                 <img src="${img}" 
@@ -629,6 +656,26 @@
             `;
 
             return card;
+        }
+        
+        function handleHashChange() {
+            // Remove glowing effect from all cards
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.classList.remove('glowing');
+            });
+
+            // Get the hash without the # symbol
+            const hash = window.location.hash.slice(1);
+            
+            if (hash) {
+                // Find the card with matching ID and add glowing effect
+                const targetCard = document.getElementById(hash);
+                if (targetCard) {
+                    targetCard.classList.add('glowing');
+                    // Scroll to the card
+                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         }
 
         function changeImage(projectIndex, imageIndex) {
@@ -707,6 +754,7 @@
                     projectsGrid.appendChild(createProjectCard(project, index));
                 });
             }
+            handleHashChange();
         }
 
         // Close modal when clicking outside
@@ -719,6 +767,7 @@
 
         // Load everything when the page loads
         window.addEventListener('load', initializePage);
+        window.addEventListener('hashchange', handleHashChange);
     </script>
 </body>
 </html>
