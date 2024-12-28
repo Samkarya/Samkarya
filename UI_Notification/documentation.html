@@ -1,1 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamkaryaUI Notify - Documentation & Demo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #1F2937;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #F3F4F6;
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        h3 {
+            margin: 1.5rem 0 1rem;
+            color: #4B5563;
+        }
+
+        .demo-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .demo-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .demo-button:hover {
+            opacity: 0.9;
+        }
+
+        .demo-button.success { background: var(--success); }
+        .demo-button.error { background: var(--error); }
+        .demo-button.warning { background: var(--warning); }
+
+        code {
+            background: #F3F4F6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            margin: 1rem 0;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            text-align: left;
+        }
+
+        th {
+            background: #F9FAFB;
+        }
+
+        .property-table td:first-child {
+            font-family: monospace;
+            white-space: nowrap;
+        }
+        .custom-builder {
+            background: #F9FAFB;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .preview-code {
+            background: #1F2937;
+            color: #F9FAFB;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+        }
+
+        .actions-container {
+            border: 1px solid #E5E7EB;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .action-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .remove-action {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-action {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SamkaryaUI Notify</h1>
+        <p>A powerful, flexible, and easy-to-use notification system</p>
+    </div>
+
+    <h2>Installation</h2>
+    <p>Include the notification system in your project:</p>
+    <pre><code class="language-html">&lt;script type="module"&gt;
+    import Notify from './samkaryaUiNotify.js';
+&lt;/script&gt;</code></pre>
+
+    <h2>Basic Usage</h2>
+    <div class="demo-section">
+        <h3>Simple Notifications</h3>
+        <div class="demo-grid">
+            <button class="demo-button" onclick="showBasicNotification('info')">Info Notification</button>
+            <button class="demo-button success" onclick="showBasicNotification('success')">Success Notification</button>
+            <button class="demo-button error" onclick="showBasicNotification('error')">Error Notification</button>
+            <button class="demo-button warning" onclick="showBasicNotification('warning')">Warning Notification</button>
+        </div>
+
+        <pre><code class="language-javascript">Notify.show({
+    title: 'Hello World',
+    message: 'This is a basic notification',
+    type: 'info' // 'success', 'error', 'warning'
+});</code></pre>
+    </div>
+
+    <h2>Advanced Features</h2>
+    <div class="demo-section">
+        <h3>Notifications with Actions</h3>
+        <button class="demo-button" onclick="showNotificationWithActions()">Show Action Notification</button>
+        <pre><code class="language-javascript">Notify.show({
+    title: 'Confirm Action',
+    message: 'Are you sure you want to proceed?',
+    type: 'warning',
+    duration: 0,
+    actions: [
+        {
+            label: 'Yes',
+            onClick: () => console.log('Confirmed'),
+            dismiss: true
+        },
+        {
+            label: 'No',
+            onClick: () => console.log('Cancelled'),
+            dismiss: true
+        }
+    ]
+});</code></pre>
+    </div>
+
+    <div class="demo-section">
+        <h3>Progress Bar</h3>
+        <button class="demo-button" onclick="showProgressNotification()">Show Progress</button>
+        <pre><code class="language-javascript">Notify.show({
+    title: 'Downloading...',
+    message: 'File download in progress',
+    type: 'info',
+    progress: true,
+    duration: 5000
+});</code></pre>
+    </div>
+
+    <div class="demo-section">
+        <h3>Custom Position</h3>
+        <div class="demo-grid">
+            <button class="demo-button" onclick="showPositionedNotification('top-left')">Top Left</button>
+            <button class="demo-button" onclick="showPositionedNotification('top-center')">Top Center</button>
+            <button class="demo-button" onclick="showPositionedNotification('top-right')">Top Right</button>
+            <button class="demo-button" onclick="showPositionedNotification('bottom-left')">Bottom Left</button>
+            <button class="demo-button" onclick="showPositionedNotification('bottom-center')">Bottom Center</button>
+            <button class="demo-button" onclick="showPositionedNotification('bottom-right')">Bottom Right</button>
+        </div>
+    </div>
+
+    <h2>Custom Notification Builder</h2>
+    <div class="custom-builder">
+        <form id="notificationBuilder" onsubmit="return false;">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" placeholder="Enter notification title">
+                </div>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type">
+                        <option value="info">Info</option>
+                        <option value="success">Success</option>
+                        <option value="error">Error</option>
+                        <option value="warning">Warning</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" rows="3" placeholder="Enter notification message"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="position">Position</label>
+                    <select id="position">
+                        <option value="top-right">Top Right</option>
+                        <option value="top-left">Top Left</option>
+                        <option value="top-center">Top Center</option>
+                        <option value="bottom-right">Bottom Right</option>
+                        <option value="bottom-left">Bottom Left</option>
+                        <option value="bottom-center">Bottom Center</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (ms)</label>
+                    <input type="number" id="duration" value="5000" min="0" step="1000">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="progress">
+                    <label for="progress">Show Progress Bar</label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="pauseOnHover" checked>
+                    <label for="pauseOnHover">Pause on Hover</label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="dismissible" checked>
+                    <label for="dismissible">Dismissible</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Actions</label>
+                <div id="actionsContainer" class="actions-container">
+                    <!-- Action items will be added here -->
+                </div>
+                <button type="button" class="add-action" onclick="addActionField()">Add Action</button>
+            </div>
+
+            <button class="demo-button" onclick="showCustomNotification()">Show Notification</button>
+            
+            <div class="preview-code" id="previewCode"></div>
+        </form>
+    </div>
+
+    <h2>API Reference</h2>
+    <h3>Configuration Options</h3>
+    <table class="property-table">
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>''</td>
+            <td>The title of the notification</td>
+        </tr>
+        <tr>
+            <td>message</td>
+            <td>string</td>
+            <td>''</td>
+            <td>The main message content</td>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>string</td>
+            <td>'info'</td>
+            <td>One of: 'info', 'success', 'error', 'warning'</td>
+        </tr>
+        <tr>
+            <td>position</td>
+            <td>string</td>
+            <td>'top-right'</td>
+            <td>Position of the notification</td>
+        </tr>
+        <tr>
+            <td>duration</td>
+            <td>number</td>
+            <td>5000</td>
+            <td>Duration in ms (0 for no auto-dismiss)</td>
+        </tr>
+        <tr>
+            <td>progress</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Show progress bar</td>
+        </tr>
+        <tr>
+            <td>actions</td>
+            <td>array</td>
+            <td>[]</td>
+            <td>Array of action buttons</td>
+        </tr>
+        <tr>
+            <td>pauseOnHover</td>
+            <td>boolean</td>
+            <td>true</td>
+            <td>Pause timer on hover</td>
+        </tr>
+    </table>
+
+    <script type="module">
+        import Notify from './samkaryaUiNotify.js';
+        window.Notify = Notify;
+        
+        window.showBasicNotification = (type) => {
+            Notify.show({
+                title: 'Basic Notification',
+                message: `This is a ${type} notification`,
+                type
+            });
+        };
+
+        window.showNotificationWithActions = () => {
+            Notify.show({
+                title: 'Confirm Action',
+                message: 'Are you sure you want to proceed?',
+                type: 'warning',
+                duration: 0,
+                actions: [
+                    {
+                        label: 'Yes',
+                        onClick: () => console.log('Confirmed'),
+                        dismiss: true
+                    },
+                    {
+                        label: 'No',
+                        onClick: () => console.log('Cancelled'),
+                        dismiss: true
+                    }
+                ]
+            });
+        };
+
+        window.showProgressNotification = () => {
+            Notify.show({
+                title: 'Downloading...',
+                message: 'File download in progress',
+                type: 'info',
+                progress: true,
+                duration: 5000
+            });
+        };
+
+        window.showPositionedNotification = (position) => {
+            Notify.show({
+                title: 'Positioned Notification',
+                message: `This notification appears at ${position}`,
+                type: 'info',
+                position
+            });
+        };
+        window.addActionField = () => {
+            const container = document.getElementById('actionsContainer');
+            const actionIndex = container.children.length;
+            
+            const actionItem = document.createElement('div');
+            actionItem.className = 'action-item';
+            actionItem.innerHTML = `
+                <input type="text" placeholder="Action Label" class="action-label">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="dismiss-${actionIndex}" checked>
+                    <label for="dismiss-${actionIndex}">Dismiss on Click</label>
+                </div>
+                <button type="button" class="remove-action" onclick="this.parentElement.remove(); updatePreview();">×</button>
+            `;
+            
+            container.appendChild(actionItem);
+            updatePreview();
+        };
+
+        window.showCustomNotification = () => {
+            const config = getNotificationConfig();
+            Notify.show(config);
+            updatePreview();
+        };
+
+        window.getNotificationConfig = () => {
+            const form = document.getElementById('notificationBuilder');
+            
+            // Get actions
+            const actions = Array.from(document.querySelectorAll('.action-item')).map(item => ({
+                label: item.querySelector('.action-label').value,
+                dismiss: item.querySelector('[type="checkbox"]').checked,
+                onClick: () => console.log('Action clicked')
+            })).filter(action => action.label);
+
+            return {
+                title: form.querySelector('#title').value,
+                message: form.querySelector('#message').value,
+                type: form.querySelector('#type').value,
+                position: form.querySelector('#position').value,
+                duration: parseInt(form.querySelector('#duration').value),
+                progress: form.querySelector('#progress').checked,
+                pauseOnHover: form.querySelector('#pauseOnHover').checked,
+                dismissible: form.querySelector('#dismissible').checked,
+                actions
+            };
+        };
+
+        window.updatePreview = () => {
+            const config = getNotificationConfig();
+            const code = `Notify.show(${JSON.stringify(config, null, 2)});`;
+            document.getElementById('previewCode').textContent = code;
+        };
+
+        // Add event listeners to all form inputs for live preview updates
+        document.getElementById('notificationBuilder').querySelectorAll('input, select, textarea')
+            .forEach(element => {
+                element.addEventListener('input', updatePreview);
+            });
+
+        // Initial preview update
+        updatePreview();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+</body>
+</html>
