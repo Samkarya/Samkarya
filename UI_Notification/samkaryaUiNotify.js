@@ -7,9 +7,13 @@ const NOTIFICATION_STYLES = `
   flex-direction: column;
   gap: 10px;
   max-height: 100vh;
-  overflow-y: auto;
+  overflow:hidden; /* Hides vertical overflow */
+  flex-wrap: wrap;
   padding: 10px;
   pointer-events: none;
+}
+.ska-notification-container::-webkit-scrollbar {
+  display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari, etc.) */
 }
 
 .ska-top-right { top: 0; right: 0; }
