@@ -150,7 +150,7 @@ class NotificationSystem {
       position = 'top-right',
       duration = 5000,
       actions = [],
-      progress = false,
+      progress = true,
       pauseOnHover = true,
       dismissible = true,
       icon = null,
